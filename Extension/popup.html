@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Classifier</title>
+    <style>
+        body {
+            width: 320px;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        .tab {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .tab div {
+            padding: 10px;
+            flex: 1;
+            text-align: center;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab div.active {
+            border-bottom: 2px solid blue;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #url,
+        #text-result {
+            word-break: break-word;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #result,
+        #text-result {
+            margin-top: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input,
+        button {
+            width: 100%;
+            margin-top: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Classifier</h2>
+
+    <!-- Tab Navigation -->
+    <div class="tab">
+        <div id="tab-url" class="active">URL Classifier</div>
+        <div id="tab-text">Text Classifier</div>
+    </div>
+
+    <!-- URL Classifier -->
+    <div id="url-tab" class="tab-content active">
+        <div id="url"></div>
+        <div id="result">Loading...</div>
+    </div>
+
+    <!-- Text Message Classifier -->
+    <div id="text-tab" class="tab-content">
+        <input type="text" id="text-input" placeholder="Enter a message">
+        <button onclick=classifyText() id="text-button">Check Spam</button>
+        <div id="text-result">Result will appear here...</div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

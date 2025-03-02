@@ -1,0 +1,34 @@
+import joblib
+import features_extraction as features_extraction
+import sys
+import numpy as np
+
+def get_prediction_from_url(test_url):
+    features_test = features_extraction.main(test_url)
+    # Due to updates to scikit-learn, we now need a 2D array as a parameter to the predict function.
+    features_test = np.array(features_test).reshape((1, -1))
+    clf = joblib.load("random_forest.pkl")
+    pred = clf.predict(features_test)
+    return int(pred[0])
+
+
+def main():
+    prediction = get_prediction_from_url('https://www.google.com')
+
+    # Print the probability of prediction (if needed)
+    # prob = clf.predict_proba(features_test)
+    # print 'Features=', features_test, 'The predicted probability is - ', prob, 'The predicted label is - ', pred
+    #    print "The probability of this site being a phishing website is ", features_test[0]*100, "%"
+
+    if prediction == 1:
+        # print "The website is safe to browse"
+        print("SAFE",end="")
+    elif prediction == -1:
+        # print "The website has phishing features. DO NOT VISIT!"
+        print("PHISHING",end="")
+    
+        # print 'Error -', features_test
+
+
+if __name__ == "__main__":
+    main()
