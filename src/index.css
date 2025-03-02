@@ -1,0 +1,183 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 33% 6%;
+    --foreground: 210 20% 98%;
+
+    --card: 224 39% 8%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 39% 5%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 252 87% 67%;
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 226 26% 12%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 223 18% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 252 87% 67%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 220 13% 18%;
+    --input: 220 13% 18%;
+    --ring: 252 87% 67%;
+
+    --radius: 0.5rem;
+  }
+  
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50 rounded-full transition-colors hover:bg-primary;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_4px_12px_-4px_rgba(0,0,0,0.3)];
+  }
+  
+  .glass-hover {
+    @apply hover:backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 10px rgba(147, 51, 234, 0.5), 0 0 20px rgba(147, 51, 234, 0.3);
+  }
+  
+  .neo-brutalism {
+    @apply relative translate-x-0 translate-y-0 shadow-[8px_8px_0px_0px_rgba(147,51,234,0.5)] transition-all duration-200;
+  }
+  
+  .neo-brutalism:hover {
+    @apply translate-x-[3px] translate-y-[3px] shadow-[5px_5px_0px_0px_rgba(147,51,234,0.5)];
+  }
+
+  .shimmer {
+    @apply relative overflow-hidden;
+  }
+
+  .shimmer::before {
+    @apply absolute top-0 -left-[100%] z-[1] block w-[50%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent;
+    content: "";
+    animation: shimmer 2s infinite;
+  }
+  
+  /* Section animations */
+  .fade-in {
+    @apply opacity-0 translate-y-8;
+    animation: fadeIn 1s forwards;
+  }
+  
+  .slide-in-left {
+    @apply opacity-0 -translate-x-12;
+    animation: slideInLeft 1s forwards;
+  }
+  
+  .slide-in-right {
+    @apply opacity-0 translate-x-12;
+    animation: slideInRight 1s forwards;
+  }
+  
+  .scale-in {
+    @apply opacity-0 scale-95;
+    animation: scaleIn 1s forwards;
+  }
+  
+  /* Animation for interactive elements */
+  .hover-lift {
+    @apply transition-transform duration-300;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+  
+  .hover-scale {
+    @apply transition-transform duration-300;
+  }
+  
+  .hover-scale:hover {
+    @apply scale-105;
+  }
+  
+  .pulse-animation {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
