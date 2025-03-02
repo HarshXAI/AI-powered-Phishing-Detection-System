@@ -37,20 +37,39 @@ document.addEventListener("DOMContentLoaded", function () {
             let url = tabs[0].url;
             document.getElementById("url").innerText = "URL: " + url;
 
-            fetch("http://127.0.0.1:5000/classify-url", { // Adjust this to match your Flask API
+            // Check if URL is valid
+            if (!url || url.startsWith('chrome://')) {
+                document.getElementById("result").innerText = "Cannot analyze this type of URL";
+                return;
+            }
+
+            fetch("http://127.0.0.1:8000/classify-url", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
                 body: JSON.stringify({ url: url })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
                 document.getElementById("result").innerText = data.is_phishing ? "Phishing Detected!" : "Safe URL";
             })
             .catch(error => {
-                document.getElementById("result").innerText = "Error: Could not classify URL.";
-                console.error("Error:", error);
+                console.error("Detailed error:", error);
+                if (error.message.includes('Failed to fetch')) {
+                    document.getElementById("result").innerText = "Error: Server is not running. Please start the Python server.";
+                } else {
+                    document.getElementById("result").innerText = "Error: " + error.message;
+                }
             });
         });
     }
@@ -68,12 +87,12 @@ function classifyText() {
         return;
     }
 
-    fetch("http://127.0.0.1:5000/classify-text", { // Adjust URL to match your Flask endpoint
+    fetch("http://127.0.0.1:8000/detect", { // Adjust URL to match your Flask endpoint
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ text: text })
+        body: JSON.stringify({ TEXT: text })
     })
     .then(response => response.json())
     .then(data => {
